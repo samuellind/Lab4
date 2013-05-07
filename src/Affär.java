@@ -4,6 +4,8 @@ public class Affär extends JFrame {
 
 	private GUI _newGUI;
 	
+	//Pre: true
+	//Post: en ny affär har skapats
 	public Affär(){
 		super("Affär");
 		this.setSize(500,500);
