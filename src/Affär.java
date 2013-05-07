@@ -2,7 +2,6 @@ import javax.swing.JFrame;
 
 public class Affär extends JFrame {
 
-	private JFrame _affär;
 	private GUI _newGUI;
 	
 	public Affär(){
