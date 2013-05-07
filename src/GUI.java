@@ -3,14 +3,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 
 public class GUI extends JPanel implements ActionListener {
 	
-	private JPanel _north, _south, _center;
+	private JPanel _north, _east, _south, _west, _center;
 	private JLabel _kund, _fNamn, _eNamn, _alder, _empty1, _empty2, _empty3, _empty4, _iButik, _iKo1, _iKo2, _flytta;
 	private JTextField _fText, _eText, _aText;
 	private JButton _skapa, _ko1, _ko2, _betjana1, _betjana2;
+	private JOptionPane _taBortAlert;
 	private JList _allaKunder,_listKo1, _listKo2;
+	private String _strAlder;
 	private Kš _kš;
 	private DefaultListModel _defAlla, _defKo1, _defKo2;
 	
