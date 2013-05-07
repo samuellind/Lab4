@@ -1,14 +1,18 @@
+import javax.swing.JOptionPane;
+
 
 public class Person {
 	
 	private String _fNamn, _eNamn;
 	private int _alder;
 	
-	public Person(String fNamn, String eNamn, String alder){
+	public Person(String fNamn, String eNamn, int alder){
 		_fNamn = fNamn;
 		_eNamn = eNamn;
-		_alder = Integer.parseInt(alder);
-		System.out.println("Person skapad" + _fNamn + _eNamn + alder);
+		_alder = alder;
+		//checkAlder();
+		System.out.println("Person skapad" + _fNamn + _eNamn + _alder);
+		//toString();
 	}
 	
 	public String getFNamn(){
@@ -21,5 +25,11 @@ public class Person {
 	
 	public int getAlder(){
 		return _alder;
+	}
+	
+	public String toString(){
+		String person=(_fNamn + " " + _eNamn + " " + _alder);
+		//System.out.print(person);
+		return person;
 	}
 }

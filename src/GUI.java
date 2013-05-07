@@ -10,11 +10,15 @@ public class GUI extends JPanel implements ActionListener {
 	private JPanel _north, _east, _south, _west, _center;
 	private JLabel _kund, _fNamn, _eNamn, _alder, _empty1, _empty2, _empty3, _empty4, _iButik, _iKo1, _iKo2, _flytta;
 	private JTextField _fText, _eText, _aText;
-	private JButton _skapa, _ko1, _ko2, _betjana;
+	private JButton _skapa, _ko1, _ko2, _betjana, _taBort;
+	private JOptionPane _taBortAlert;
 	private JList _allaKunder,_listKo1, _listKo2;
+	private String _strAlder;
+	private Memory _memory;
 	
 	public GUI(){
 		super(new BorderLayout());
+		_memory = new Memory();
 		
 		_north = new JPanel();
 		_north.setBackground(Color.LIGHT_GRAY);
@@ -41,9 +45,9 @@ public class GUI extends JPanel implements ActionListener {
 		_empty2 = new JLabel();
 		_empty3 = new JLabel();
 		_empty4 = new JLabel();
-		_fNamn = new JLabel("Fˆrnamn");
+		_fNamn = new JLabel("Förnamn");
 		_eNamn = new JLabel("Efternamn");
-		_alder = new JLabel("≈lder");
+		_alder = new JLabel("Ålder");
 		
 		_fText = new JTextField(10);
 		_eText = new JTextField(20);
@@ -68,8 +72,8 @@ public class GUI extends JPanel implements ActionListener {
 	
 	private void createCenter(){
 		_iButik = new JLabel("I Butik");
-		_iKo1 = new JLabel("I kˆ 1:");
-		_iKo2 = new JLabel("I kˆ 2:");
+		_iKo1 = new JLabel("I kö 1:");
+		_iKo2 = new JLabel("I kö 2:");
 		
 		_allaKunder = new JList();
 		_listKo1 = new JList();
@@ -89,14 +93,22 @@ public class GUI extends JPanel implements ActionListener {
 	
 	private void createSouth(){
 		_flytta = new JLabel("Flytta till:");
-		_ko1 = new JButton("Kˆ 1");
-		_ko2 = new JButton("Kˆ 2");
-		_betjana = new JButton("Betj‰na");
+		
+		_ko1 = new JButton("Kö 1");
+		_ko2 = new JButton("Kö 2");
+		_betjana = new JButton("Betjäna");
+		_taBort = new JButton("Ta bort kund.");
 		
 		_south.add(_flytta);
 		_south.add(_ko1);
 		_south.add(_ko2);
 		_south.add(_betjana);
+		_south.add(_taBort);
+		
+		_ko1.addActionListener(this);
+		_ko2.addActionListener(this);
+		_betjana.addActionListener(this);
+		_taBort.addActionListener(this);
 		
 		_south.setAlignmentX(LEFT_ALIGNMENT);
 	}
@@ -104,18 +116,42 @@ public class GUI extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==_skapa){
-			new Person(_fText.getText(),_eText.getText(),_aText.getText());
-			_fText.setText("");
-			_eText.setText("");
-			_aText.setText("");
+			if(_memory.checkAlder(_aText.getText())==true){
+				_memory.createPerson(_fText.getText(),_eText.getText(),_aText.getText());
+				_fText.setText("");
+				_eText.setText("");
+				_aText.setText("");
+			}
+			
 		}
 		
 		else if(e.getSource()==_ko1){
-			
+			System.out.println("Kö1");
 		}
 		
 		else if(e.getSource()==_ko2){
-			
+			System.out.println("Kö2");
+		}
+		
+		else if(e.getSource()==_betjana){
+			System.out.println("Betjäna");
+		}
+		
+		else if(e.getSource()==_taBort){
+			System.out.println("Test");
+			_taBortAlert = new JOptionPane();
+			Object[] options = {"Nej",
+                    "Ja"};
+			int n = JOptionPane.showOptionDialog(_taBortAlert,
+					"Vill du verkligen ta bort kunden?",
+							"Ta bort kund",
+							JOptionPane.YES_NO_CANCEL_OPTION,
+							JOptionPane.OK_CANCEL_OPTION,
+							null,
+							options,
+							options[1]);
 		}
 	}
+	
+	
 }
