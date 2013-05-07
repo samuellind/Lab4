@@ -10,4 +10,10 @@ public class Person {
 		_alder = alder;
 		System.out.println("Person skapad" + _fNamn + _eNamn + _alder);
 	}
+	
+	public String toString(){
+				String person=(_fNamn + " " + _eNamn + " " + _alder);
+				//System.out.print(person);
+				return person;
+		 	}
 }
