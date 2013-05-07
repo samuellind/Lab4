@@ -10,15 +10,20 @@ public class GUI extends JPanel implements ActionListener {
 	private JPanel _north, _east, _south, _west, _center;
 	private JLabel _kund, _fNamn, _eNamn, _alder, _empty1, _empty2, _empty3, _empty4, _iButik, _iKo1, _iKo2, _flytta;
 	private JTextField _fText, _eText, _aText;
-	private JButton _skapa, _ko1, _ko2, _betjana, _taBort;
+	private JButton _skapa, _ko1, _ko2, _betjana1, _betjana2;
 	private JOptionPane _taBortAlert;
 	private JList _allaKunder,_listKo1, _listKo2;
 	private String _strAlder;
-	private Memory _memory;
+	private Kö _kö;
+	private DefaultListModel _defAlla, _defKo1, _defKo2;
 	
 	public GUI(){
 		super(new BorderLayout());
-		_memory = new Memory();
+		_defAlla = new DefaultListModel();
+		_defKo1 = new DefaultListModel();
+		_defKo2 = new DefaultListModel();
+		
+		_kö = new Kö(_defAlla, _defKo1, _defKo2);
 		
 		_north = new JPanel();
 		_north.setBackground(Color.LIGHT_GRAY);
@@ -75,9 +80,15 @@ public class GUI extends JPanel implements ActionListener {
 		_iKo1 = new JLabel("I kö 1:");
 		_iKo2 = new JLabel("I kö 2:");
 		
-		_allaKunder = new JList();
-		_listKo1 = new JList();
-		_listKo2 = new JList();
+		_allaKunder = new JList(_defAlla);
+		_listKo1 = new JList(_defKo1);
+		_listKo2 = new JList(_defKo2);
+		
+		_allaKunder.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		_listKo1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		_listKo2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
+		//_allaKunder.set
 		
 		_allaKunder.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 2));
 		_listKo1.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 2));
@@ -96,19 +107,19 @@ public class GUI extends JPanel implements ActionListener {
 		
 		_ko1 = new JButton("Kö 1");
 		_ko2 = new JButton("Kö 2");
-		_betjana = new JButton("Betjäna");
-		_taBort = new JButton("Ta bort kund.");
+		_betjana1 = new JButton("Betj. Kassa 1.");
+		_betjana2 = new JButton("Betj. Kassa 2.");
 		
 		_south.add(_flytta);
 		_south.add(_ko1);
 		_south.add(_ko2);
-		_south.add(_betjana);
-		_south.add(_taBort);
+		_south.add(_betjana1);
+		_south.add(_betjana2);
 		
 		_ko1.addActionListener(this);
 		_ko2.addActionListener(this);
-		_betjana.addActionListener(this);
-		_taBort.addActionListener(this);
+		_betjana1.addActionListener(this);
+		_betjana2.addActionListener(this);
 		
 		_south.setAlignmentX(LEFT_ALIGNMENT);
 	}
@@ -116,8 +127,8 @@ public class GUI extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==_skapa){
-			if(_memory.checkAlder(_aText.getText())==true){
-				_memory.createPerson(_fText.getText(),_eText.getText(),_aText.getText());
+			if(_kö.checkAlder(_aText.getText())==true){
+				_kö.createPerson(_fText.getText(),_eText.getText(),_aText.getText());
 				_fText.setText("");
 				_eText.setText("");
 				_aText.setText("");
@@ -126,20 +137,35 @@ public class GUI extends JPanel implements ActionListener {
 		}
 		
 		else if(e.getSource()==_ko1){
+			if(_allaKunder.getModel().getSize() != 0){
 			System.out.println("Kö1");
+			_kö.moveToQueue1(_allaKunder.getSelectedValue());
+			_allaKunder.clearSelection();
+			}
 		}
 		
 		else if(e.getSource()==_ko2){
+			if(_allaKunder.getModel().getSize() != 0){
 			System.out.println("Kö2");
+			_kö.moveToQueue2(_allaKunder.getSelectedValue());
+			_allaKunder.clearSelection();
+			}
 		}
 		
-		else if(e.getSource()==_betjana){
+		else if(e.getSource()==_betjana1){
 			System.out.println("Betjäna");
+			_kö.serveQueue1();
 		}
 		
-		else if(e.getSource()==_taBort){
-			System.out.println("Test");
-			_taBortAlert = new JOptionPane();
+		else if(e.getSource()==_betjana2){
+			System.out.println("Betjäna 1");
+			_kö.serveQueue2();
+		}
+		
+		else if(e.getSource()==_betjana2){
+			System.out.println("Betjäna 2");
+			_kö.serveQueue2();
+			/*_taBortAlert = new JOptionPane();
 			Object[] options = {"Nej",
                     "Ja"};
 			int n = JOptionPane.showOptionDialog(_taBortAlert,
@@ -149,7 +175,7 @@ public class GUI extends JPanel implements ActionListener {
 							JOptionPane.OK_CANCEL_OPTION,
 							null,
 							options,
-							options[1]);
+							options[1]);*/
 		}
 	}
 	
