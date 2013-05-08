@@ -10,10 +10,9 @@ public class Person {
 		_fNamn = fNamn;
 		_eNamn = eNamn;
 		_alder = alder;
-		//System.out.println("Person skapad" + _fNamn + _eNamn + _alder);
 	}
 	
-	//Pre: Person Ã¤r ett objekt
+	//Pre: Person Šr ett objekt
 	//Post: Person-objektet har omvandlats till string, returneras som string
 	public String toString(){
 				String person=(_fNamn + " " + _eNamn + " " + _alder);
